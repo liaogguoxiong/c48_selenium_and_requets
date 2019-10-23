@@ -31,7 +31,7 @@ def get_status():
         for c in cookies:
             cookie[c['name']]=c['value']
         print(cookie)
-        service_status={}
+        wrong_status={}
         for i in company_info[ipp]:
             company_name=i[2]
             shuihao=i[0]
@@ -40,16 +40,16 @@ def get_status():
                 "search_nsrsbh": shuihao
             }
             res = requests.post(req_url, headers=headers, cookies=cookie, data=data)
-            print(res.status_code)
+            # print(res.status_code)
             soup = BS(res.text, 'lxml')
             # print(soup)
             tbody = soup.find_all("tbody")[0]
             status = tbody.find_all("span")[0].text
             print("{}的状态是:{}".format(company_name, status))
-            service_status[company_name]=status
+            if status != "可用":
+                wrong_status[company_name]=status
 
-    print(service_status)
-
+    print(wrong_status)
 
 
 get_status()
