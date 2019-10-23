@@ -9,8 +9,14 @@
 import re
 
 def get_info():
-    with open("input_file",'r',encoding="utf-8") as f:
-        res=f.readlines()
+    with open("jieshun",'r',encoding="utf-8") as f:
+        res1=f.readlines()
+
+    # print(res1)
+    res=[]
+    for i in res1:
+        if i != "\n":
+            res.append(i)
 
     # print(res)
     ipps={}

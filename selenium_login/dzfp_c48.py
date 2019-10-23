@@ -25,9 +25,9 @@ class c48_sys():
         self.login_url = 'http://{}/zzs_kpfw_manager/login.htm'.format(ipp)  # c48登录的url
         self.base_url = 'http://{}/zzs_kpfw_manager'.format(ipp)  # 跳转到其他功能的基础url
 
-        # chrome_options = webdriver.ChromeOptions()
-        # chrome_options.add_argument('headless')
-        self.driver = webdriver.Chrome()   # 实例化selenium.webdriver
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('headless')
+        self.driver = webdriver.Chrome(chrome_options=chrome_options)   # 实例化selenium.webdriver
         """
         ipp为192.168.20.197:8081的时候
         账号密码不是默认的
@@ -269,7 +269,7 @@ class c48_sys():
         rz.log(m3)
         time.sleep(2)
         try:
-            status=self.driver.find_element_by_xpath("/html[1]/body[1]/form[input_file]/div[input_file]/table[1]/tbody[1]/tr[1]/td[6]/span[1]").text
+            status=self.driver.find_element_by_xpath("/html[1]/body[1]/form[jieshun]/div[jieshun]/table[1]/tbody[1]/tr[1]/td[6]/span[1]").text
             m4="获取到{}的服务状态为:{}".format(name,status)
             rz.log(m4)
             rz.log("\n\n\n")
@@ -307,12 +307,12 @@ class c48_sys():
         self.driver.implicitly_wait(8)
         time.sleep(2)
         exist_sign="局端没有可以下载票源"
-        res=self.driver.find_element_by_xpath("/html[1]/body[1]/div[1]/div[input_file]/span[1]/font[1]").text
+        res=self.driver.find_element_by_xpath("/html[1]/body[1]/div[1]/div[jieshun]/span[1]/font[1]").text
         m1="{}无可下载票源".format(shuihao)
         if exist_sign in res:
             rz.log(m1)
         else:
-            fp_num=self.driver.find_element_by_xpath("/html[1]/body[1]/form[1]/div[input_file]/table[1]/tbody[1]/tr[1]/td[8]").text
+            fp_num=self.driver.find_element_by_xpath("/html[1]/body[1]/form[1]/div[jieshun]/table[1]/tbody[1]/tr[1]/td[8]").text
             m3="{}可领购发票数量为:{}".format(shuihao,fp_num)
             rz.log(m3)
             self.driver.get(purchase_url)
@@ -326,14 +326,14 @@ class c48_sys():
             self.driver.find_element_by_id("queryInfo").click()
             rz.log("点击查询按钮....")
             time.sleep(2)
-            self.driver.find_element_by_xpath("/html[1]/body[1]/form[input_file]/div[input_file]/table[1]/tbody[1]/tr[1]/td[6]/input[1]").click()
-            self.driver.find_element_by_xpath("/html[1]/body[1]/form[input_file]/div[input_file]/table[1]/tbody[1]/tr[1]/td[6]/input[1]").send_keys(fp_num)
+            self.driver.find_element_by_xpath("/html[1]/body[1]/form[jieshun]/div[jieshun]/table[1]/tbody[1]/tr[1]/td[6]/input[1]").click()
+            self.driver.find_element_by_xpath("/html[1]/body[1]/form[jieshun]/div[jieshun]/table[1]/tbody[1]/tr[1]/td[6]/input[1]").send_keys(fp_num)
             m5="输入要领购的发票份数:{}".format(fp_num)
             rz.log(m5)
             time.sleep(2)
             self.driver.find_element_by_link_text("网上领票").click()
             rz.log("点击网上领票....")
-            res_mes=self.driver.find_element_by_xpath("/html[1]/body[1]/div[1]/div[input_file]/span[1]/font[1]").text
+            res_mes=self.driver.find_element_by_xpath("/html[1]/body[1]/div[1]/div[jieshun]/span[1]/font[1]").text
             sucess_sign="申请结果【成功】"
             if sucess_sign in res_mes:
                 rz.log(res_mes)
@@ -386,7 +386,7 @@ class c48_sys():
                 如果超时,重复调用3次
                 """
                 try:
-                    res_mes = self.driver.find_element_by_xpath("/html[1]/body[1]/div[input_file]/div[1]/div[input_file]/span[1]/font[1]").text
+                    res_mes = self.driver.find_element_by_xpath("/html[1]/body[1]/div[jieshun]/div[1]/div[jieshun]/span[1]/font[1]").text
                     rz.log(res_mes)
                     rz.log("检查是否还有未上传的发票.....")
                     time.sleep(2)
@@ -407,6 +407,9 @@ class c48_sys():
         cookies=self.driver.get_cookies()
         return cookies
 
+    def s_source(self):
+        res=self.driver.page_source
+        return  res
 
 
 

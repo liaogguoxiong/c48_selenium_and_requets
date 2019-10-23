@@ -6,33 +6,8 @@
 # @File             : debug.py
 # @Des:
 
-with open("11","r",encoding="utf-8") as f:
-    name=f.readlines()
+from  dzfp_c48 import *
 
-name3=[]
-for n in name:
-    n=n.strip()
-    name3.append(n)
-print(name3)
-with open("111","r",encoding="utf-8") as f:
-    name1=f.readlines()
-
-name2=[]
-for i in name1:
-    i=i.strip()
-    # print(i[:-19])
-    # print(i[-18:])
-    name2.append(i)
-
-print(name2)
-
-for j in name2:
-    for k in name3:
-        if j[-18:] in k:
-            k=k+"-"+j[:-19]
-            print(k)
-            with open("input_file","a",encoding="utf-8") as f:
-                f.write(k)
-                f.write("\n")
-
-
+path="D:/发票明细/9月"
+if not os.path.exists(path):
+    os.makedirs(path)
