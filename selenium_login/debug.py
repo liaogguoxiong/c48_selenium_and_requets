@@ -6,8 +6,7 @@
 # @File             : debug.py
 # @Des:
 
-from  dzfp_c48 import *
+import requests
 
-path="D:/发票明细/9月"
-if not os.path.exists(path):
-    os.makedirs(path)
+d={"1":2,"2":3}
+print(len(d))
